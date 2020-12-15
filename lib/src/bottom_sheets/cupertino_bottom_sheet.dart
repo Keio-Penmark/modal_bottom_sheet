@@ -68,6 +68,7 @@ class _CupertinoBottomSheetContainer extends StatelessWidget {
 Future<T> showCupertinoModalBottomSheet<T>({
   @required BuildContext context,
   @required WidgetBuilder builder,
+  NavigatorState navigatorState,
   Color backgroundColor,
   double elevation,
   double closeProgressThreshold,
@@ -99,9 +100,11 @@ Future<T> showCupertinoModalBottomSheet<T>({
   final barrierLabel = hasMaterialLocalizations
       ? MaterialLocalizations.of(context).modalBarrierDismissLabel
       : '';
+    
+  final usedNavigatorState = navigatorState ?? Navigator.of(context, rootNavigator: useRootNavigator);
 
   final result =
-      await Navigator.of(context, rootNavigator: useRootNavigator).push(
+      await usedNavigatorState.push(
     CupertinoModalBottomSheetRoute<T>(
         builder: builder,
         containerBuilder: (context, _, child) => _CupertinoBottomSheetContainer(
