@@ -32,10 +32,15 @@ class _CupertinoBottomSheetContainer extends StatelessWidget {
   final Widget child;
   final Color backgroundColor;
   final Radius topRadius;
+  final bool needShowBoxShadow;
 
-  const _CupertinoBottomSheetContainer(
-      {Key key, this.child, this.backgroundColor, @required this.topRadius})
-      : super(key: key);
+  const _CupertinoBottomSheetContainer({
+    Key key,
+    this.child,
+    this.backgroundColor,
+    @required this.topRadius,
+    this.needShowBoxShadow = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +56,10 @@ class _CupertinoBottomSheetContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.vertical(top: topRadius),
         child: Container(
-          decoration:
-              BoxDecoration(color: _backgroundColor, boxShadow: [shadow]),
+          decoration: BoxDecoration(
+            color: _backgroundColor,
+            boxShadow: needShowBoxShadow ? [shadow] : null,
+          ),
           width: double.infinity,
           child: MediaQuery.removePadding(
             context: context,
@@ -83,6 +90,7 @@ Future<T> showCupertinoModalBottomSheet<T>({
   bool bounce = true,
   bool isDismissible,
   bool enableDrag = true,
+  bool needShowBoxShadow = true,
   Radius topRadius = _default_top_radius,
   Duration duration,
   RouteSettings settings,
@@ -111,6 +119,7 @@ Future<T> showCupertinoModalBottomSheet<T>({
               child: child,
               backgroundColor: backgroundColor,
               topRadius: topRadius,
+              needShowBoxShadow: needShowBoxShadow,
             ),
         secondAnimationController: secondAnimation,
         expanded: expand,
